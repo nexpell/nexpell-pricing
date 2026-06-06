@@ -1,0 +1,495 @@
+/* ======= Pricing Section Styles ======= */
+
+.head-boxes + .pricing-page-card {
+  margin-top: 0;
+}
+
+.pricing-page-header {
+  margin-bottom: 1.5rem;
+}
+
+.pricing-page-eyebrow {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+}
+
+.pricing-page-title {
+  margin: 0;
+  font-size: clamp(1.85rem, 2.8vw, 2.5rem);
+  line-height: 1.05;
+  font-weight: 700;
+  color: var(--nx-color-on-surface, var(--bs-body-color));
+}
+
+.pricing-page-card {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.pricing-page-card .card-body {
+  padding: 0;
+}
+
+.pricing {
+  padding: 0;
+}
+
+.pricing .box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.25rem;
+  background: var(--nx-color-card-bg, var(--bs-card-bg, #fff));
+  color: var(--nx-color-on-surface, var(--bs-body-color, #212529));
+  text-align: center;
+  box-shadow: 0 0 4px color-mix(in srgb, var(--nx-color-on-surface, #000) 18%, transparent);
+  border-radius: var(--bs-border-radius);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid color-mix(in srgb, var(--nx-color-card-border, var(--bs-border-color)) 76%, transparent);
+}
+
+.pricing .box:hover {
+  transform: translateY(-5px);
+  box-shadow: none;
+}
+
+.pricing h3 {
+  font-weight: 600;
+  margin: -1.25rem -1.25rem 1.25rem -1.25rem;
+  padding: 1rem 0.9rem;
+  font-size: 16px;
+  color: var(--nx-color-on-surface, var(--bs-body-color, #212529));
+  background: color-mix(in srgb, var(--nx-color-card-bg, var(--bs-card-bg, #fff)) 88%, var(--nx-color-on-surface, var(--bs-body-color)) 12%);
+  border-bottom: 1px solid color-mix(in srgb, var(--nx-color-card-border, var(--bs-border-color)) 70%, transparent);
+}
+
+.pricing h4 {
+  font-size: 36px;
+  color: var(--bs-primary);
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 1.25rem;
+}
+
+.pricing h4 sup {
+  font-size: 14px;
+  top: -0.85rem;
+  left: -0.15rem;
+  position: relative;
+}
+
+.pricing h4 span {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--nx-color-muted, var(--bs-secondary-color, #6c757d));
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.pricing ul {
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  line-height: 20px;
+  font-size: 14px;
+  margin: 0;
+  color: var(--nx-color-muted, var(--bs-secondary-color, #6c757d));
+  flex: 1 1 auto;
+}
+
+.pricing ul li {
+  padding-bottom: 16px;
+}
+
+.pricing ul li::before,
+.pricing-detail-list li::before {
+  content: "\2713";
+  margin-right: 6px;
+  color: rgba(var(--bs-success-rgb), 1);
+  font-weight: bold;
+}
+
+.pricing ul .na,
+.pricing-detail-list-negative li {
+  color: color-mix(in srgb, var(--nx-color-muted, var(--bs-secondary-color, #6c757d)) 76%, transparent);
+  text-decoration: line-through;
+}
+
+.pricing ul .na::before,
+.pricing-detail-list-negative li::before {
+  content: "\2717";
+  color: rgba(var(--bs-danger-rgb), 1);
+}
+
+.pricing .btn-wrap {
+  margin: 1.25rem -1.25rem -1.25rem -1.25rem;
+  padding: 1rem 0.9rem;
+  background: color-mix(in srgb, var(--nx-color-card-bg, var(--bs-card-bg, #fff)) 88%, var(--nx-color-on-surface, var(--bs-body-color)) 12%);
+  border-top: 1px solid color-mix(in srgb, var(--nx-color-card-border, var(--bs-border-color)) 70%, transparent);
+  text-align: center;
+}
+
+.pricing .btn-buy,
+.pricing-detail-actions .btn-buy {
+  background: var(--bs-primary);
+  display: inline-block;
+  padding: 6px 35px 8px 35px;
+  border-radius: var(--bs-border-radius);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Raleway", sans-serif;
+  box-shadow: none;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.pricing .btn-buy:hover,
+.pricing-detail-actions .btn-buy:hover {
+  background: color-mix(in srgb, var(--bs-primary, var(--nx-color-primary)) 88%, var(--nx-color-on-surface, #000) 12%);
+  color: var(--nx-on-inverse-text, #fff);
+}
+
+.pricing .featured h3,
+.pricing-detail-card.featured h3 {
+  color: var(--nx-on-inverse-text, #fff) !important;
+  background: var(--bs-primary, var(--nx-color-primary)) !important;
+  border-color: var(--bs-primary, var(--nx-color-primary)) !important;
+  box-shadow: none;
+}
+
+.pricing .advanced,
+.pricing-detail-card .advanced {
+  width: 200px;
+  position: absolute;
+  top: 18px;
+  right: -68px;
+  transform: rotate(45deg);
+  z-index: 1;
+  font-size: 12px;
+  padding: 2px 0;
+  background: var(--bs-primary);
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 500;
+  box-shadow: 0 2px 5px var(--bs-primary);
+  text-align: center;
+}
+
+.pricing-detail-card .advanced {
+  width: auto;
+  top: 1rem;
+  right: 1rem;
+  transform: none;
+  padding: 0.32rem 0.7rem;
+  border-radius: var(--bs-border-radius-pill);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  box-shadow: none;
+}
+
+.pricing-detail-topbar {
+  margin-bottom: 1rem;
+}
+
+.pricing-backlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.pricing-detail-panel {
+  padding: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--nx-color-card-border, var(--bs-border-color)) 76%, transparent);
+  border-radius: var(--bs-border-radius);
+  background: color-mix(in srgb, var(--nx-color-card-bg, var(--bs-card-bg, #fff)) 94%, var(--nx-color-on-surface, var(--bs-body-color)) 6%);
+  color: var(--nx-color-on-surface, var(--bs-body-color, #212529));
+}
+
+.pricing-detail-panel h2 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.pricing-detail-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pricing-detail-list li {
+  padding-bottom: 0.85rem;
+}
+
+.pricing-detail-note {
+  margin: 0 0 1rem;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+.pricing-detail-actions {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.pricing-main-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.6rem;
+  border: 1px solid color-mix(in srgb, var(--nx-color-card-border, var(--bs-border-color)) 76%, transparent);
+  border-radius: var(--bs-border-radius);
+  background: var(--nx-color-card-bg, var(--bs-card-bg, #fff));
+  color: var(--nx-color-on-surface, var(--bs-body-color, #212529));
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--nx-color-on-surface, #0f172a) 10%, transparent);
+  text-align: left;
+}
+
+.pricing-main-plan-label {
+  margin-top: 0.15rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--nx-color-on-surface, var(--bs-body-color, #0f172a));
+  line-height: 1.1;
+}
+
+.pricing-main-price {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: end;
+  column-gap: 0.45rem;
+  row-gap: 0.15rem;
+  margin-top: 0.9rem;
+}
+
+.pricing-main-currency {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nx-color-muted, var(--bs-secondary-color, #64748b));
+}
+
+.pricing-main-amount {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  line-height: 0.95;
+  font-weight: 700;
+  color: var(--bs-primary, var(--nx-color-primary));
+}
+
+.pricing-main-unit {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 1rem;
+  color: var(--nx-color-muted, var(--bs-secondary-color, #64748b));
+  font-weight: 500;
+}
+
+.pricing-main-card .pricing-detail-note {
+  margin: 1rem 0 1.35rem;
+  color: var(--nx-color-muted, var(--bs-secondary-color, #475569));
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.pricing-main-card .pricing-detail-actions .btn-buy {
+  width: 100%;
+  justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  border-radius: var(--bs-border-radius);
+  font-size: 0.96rem;
+  box-shadow: none;
+}
+
+.pricing-main-panel,
+.pricing-detail-panel-muted {
+  border-radius: var(--bs-border-radius);
+  padding: 1.6rem;
+  background: var(--nx-color-card-bg, var(--bs-card-bg, #fff));
+  color: var(--nx-color-on-surface, var(--bs-body-color, #212529));
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--nx-color-on-surface, #0f172a) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--nx-color-card-border, var(--bs-border-color)) 76%, transparent);
+}
+
+.pricing-main-panel h2,
+.pricing-detail-panel-muted h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.9rem;
+  color: var(--nx-color-on-surface, var(--bs-body-color, #0f172a));
+}
+
+.pricing-main-panel .pricing-detail-list li,
+.pricing-detail-panel-muted .pricing-detail-list li {
+  margin-bottom: 0.85rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--nx-color-card-border, var(--bs-border-color)) 68%, transparent);
+  border-radius: var(--bs-border-radius);
+  background: color-mix(in srgb, var(--nx-color-card-bg, var(--bs-card-bg, #fff)) 88%, var(--nx-color-on-surface, var(--bs-body-color)) 12%);
+  color: var(--nx-color-on-surface, var(--bs-body-color, #0f172a));
+}
+
+.pricing-todo-grid {
+  align-items: stretch;
+}
+
+.pricing-todo-view .pricing-backlink {
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--bs-border-radius-pill);
+  background: rgba(var(--bs-link-color-rgb), 0.08);
+  color: var(--bs-primary);
+  font-weight: 500;
+}
+
+.pricing-todo-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem;
+  border: 1px solid color-mix(in srgb, var(--nx-color-card-border, var(--bs-border-color)) 76%, transparent);
+  border-radius: var(--bs-border-radius);
+  background: var(--nx-color-card-bg, var(--bs-card-bg, #fff));
+  color: var(--nx-color-on-surface, var(--bs-body-color, #212529));
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--nx-color-on-surface, #0f172a) 10%, transparent);
+  text-align: left;
+}
+
+.pricing-todo-plan-label {
+  margin-top: 0.15rem;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--nx-color-on-surface, var(--bs-body-color, #0f172a));
+  line-height: 1.1;
+}
+
+.pricing-todo-price {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: end;
+  column-gap: 0.45rem;
+  row-gap: 0.15rem;
+  margin-top: 0.9rem;
+}
+
+.pricing-todo-currency {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nx-color-muted, var(--bs-secondary-color, #64748b));
+}
+
+.pricing-todo-amount {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  line-height: 0.95;
+  font-weight: 700;
+  color: var(--bs-primary, var(--nx-color-primary));
+}
+
+.pricing-todo-unit {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 1rem;
+  color: var(--nx-color-muted, var(--bs-secondary-color, #64748b));
+  font-weight: 500;
+}
+
+.pricing-todo-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-bottom: 0.65rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--bs-border-radius-pill);
+  background: var(--bs-primary);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pricing-todo-panel {
+  border-radius: var(--bs-border-radius);
+  padding: 1.6rem;
+  background: var(--nx-color-card-bg, var(--bs-card-bg, #fff));
+  color: var(--nx-color-on-surface, var(--bs-body-color, #212529));
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--nx-color-on-surface, #0f172a) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--nx-color-card-border, var(--bs-border-color)) 76%, transparent);
+}
+
+.pricing-todo-panel h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.6rem;
+  color: var(--nx-color-on-surface, var(--bs-body-color, #0f172a));
+}
+
+.pricing-todo-panel-head {
+  margin-bottom: 1.25rem;
+}
+
+.pricing-todo-copy {
+  margin: 0;
+  color: var(--nx-color-muted, var(--bs-secondary-color, #475569));
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.pricing-todo-panel .pricing-detail-list li {
+  margin-bottom: 0.85rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--nx-color-card-border, var(--bs-border-color)) 68%, transparent);
+  border-radius: var(--bs-border-radius);
+  background: color-mix(in srgb, var(--nx-color-card-bg, var(--bs-card-bg, #fff)) 88%, var(--nx-color-on-surface, var(--bs-body-color)) 12%);
+  color: var(--nx-color-on-surface, var(--bs-body-color, #0f172a));
+}
+
+.pricing-todo-panel .pricing-detail-list li::before {
+  margin-right: 0.65rem;
+}
+
+.pricing-todo-card .pricing-detail-note {
+  margin: 1rem 0 1.35rem;
+  color: var(--nx-color-muted, var(--bs-secondary-color, #475569));
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.pricing-todo-card .pricing-detail-actions .btn-buy {
+  width: 100%;
+  justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  border-radius: var(--bs-border-radius);
+  font-size: 0.96rem;
+  box-shadow: none;
+}
+
+@media (max-width: 767.98px) {
+  .pricing-page-card .card-body {
+    padding: 0;
+  }
+
+  .pricing-todo-card,
+  .pricing-todo-panel {
+    padding: 1.2rem;
+  }
+}
