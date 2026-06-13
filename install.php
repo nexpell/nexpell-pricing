@@ -1,6 +1,22 @@
 <?php
 
-global $_database;
+if (!function_exists('safe_query')) {
+    die('Access denied');
+}
+
+global $_database, $plugin;
+
+$modulname = 'pricing';
+$version = isset($plugin['version']) ? (string)$plugin['version'] : ($version ?? '1.0.3.3');
+$pluginName = 'Pricing';
+$pluginPath = 'includes/plugins/pricing/';
+
+if (!function_exists('pricing_sql')) {
+    function pricing_sql($value): string
+    {
+        return escape((string)$value);
+    }
+}
 
 if (!function_exists('pricing_schema_ensure_columns')) {
     function pricing_schema_ensure_columns(mysqli $database): void
@@ -66,20 +82,37 @@ pricing_schema_ensure_columns($_database);
 safe_query("UPDATE plugins_pricing_plans SET title_de = IF(title_de = '', title, title_de), title_en = IF(title_en = '', title, title_en), title_it = IF(title_it = '', title, title_it), price_unit_de = IF(price_unit_de = '', price_unit, price_unit_de), price_unit_en = IF(price_unit_en = '', price_unit, price_unit_en), price_unit_it = IF(price_unit_it = '', price_unit, price_unit_it)");
 safe_query("UPDATE plugins_pricing_features SET feature_text_de = IF(feature_text_de = '', feature_text, feature_text_de), feature_text_en = IF(feature_text_en = '', feature_text, feature_text_en), feature_text_it = IF(feature_text_it = '', feature_text, feature_text_it)");
 
-safe_query("
-    INSERT IGNORE INTO settings_plugins
-        (pluginID, modulname, admin_file, activate, author, website, index_link, hiddenfiles, version, path, status_display, plugin_display, widget_display, delete_display, sidebar)
+$pluginRes = safe_query("SELECT pluginID FROM settings_plugins WHERE modulname = 'pricing' LIMIT 1");
+if ($pluginRes && ($pluginRow = mysqli_fetch_assoc($pluginRes))) {
+    safe_query("UPDATE settings_plugins SET
+        admin_file = 'admin_pricing',
+        activate = 1,
+        author = 'T-Seven',
+        website = 'https://www.nexpell.de',
+        index_link = 'pricing',
+        hiddenfiles = '',
+        version = '" . pricing_sql($version) . "',
+        path = '" . pricing_sql($pluginPath) . "',
+        status_display = 1,
+        plugin_display = 1,
+        widget_display = 1,
+        delete_display = 1,
+        sidebar = 'deactivated'
+        WHERE pluginID = " . (int)$pluginRow['pluginID'] . "
+    ");
+} else {
+    safe_query("INSERT INTO settings_plugins
+        (modulname, admin_file, activate, author, website, index_link, hiddenfiles, version, path, status_display, plugin_display, widget_display, delete_display, sidebar)
     VALUES
-        ('', 'pricing', 'admin_pricing', 1, 'T-Seven', 'https://www.nexpell.de', 'pricing', '', '1.0.3.3', 'includes/plugins/pricing/', 1, 1, 1, 1, 'deactivated')
-");
-
-safe_query("UPDATE settings_plugins SET widget_display = 1 WHERE modulname = 'pricing'");
+        ('pricing', 'admin_pricing', 1, 'T-Seven', 'https://www.nexpell.de', 'pricing', '', '" . pricing_sql($version) . "', '" . pricing_sql($pluginPath) . "', 1, 1, 1, 1, 'deactivated')
+    ");
+}
 
 safe_query("
     INSERT INTO settings_widgets
         (widget_key, title, modulname, plugin, description, allowed_zones, active, version, created_at)
     VALUES
-        ('widget_pricing_content', 'Pricing Content Widget', 'pricing', 'pricing', 'Pricing plans overview widget.', 'maintop,mainbottom', 1, '1.0.0', NOW())
+        ('widget_pricing_content', 'Pricing Content Widget', 'pricing', 'pricing', 'Pricing plans overview widget.', 'maintop,mainbottom', 1, '" . pricing_sql($version) . "', NOW())
     ON DUPLICATE KEY UPDATE
         title = VALUES(title),
         modulname = VALUES(modulname),
@@ -91,7 +124,7 @@ safe_query("
 ");
 
 safe_query("
-    INSERT IGNORE INTO settings_plugins_lang
+    INSERT INTO settings_plugins_lang
         (content_key, language, content, modulname, updated_at)
     VALUES
         ('plugin_name_pricing', 'de', 'Pricing', 'pricing', NOW()),
@@ -107,10 +140,10 @@ safe_query("
 ");
 
 safe_query("
-    INSERT IGNORE INTO settings_plugins_installed
+    INSERT INTO settings_plugins_installed
         (name, modulname, description, version, author, url, folder, installed_date)
     VALUES
-        ('Pricing', 'pricing', 'Multilingual pricing pages with admin management.', '1.0.3.3', 'nexpell-team', 'https://www.nexpell.de', 'pricing', NOW())
+        ('Pricing', 'pricing', 'Multilingual pricing pages with admin management.', '" . pricing_sql($version) . "', 'nexpell-team', 'https://www.nexpell.de', 'pricing', NOW())
     ON DUPLICATE KEY UPDATE
         name = VALUES(name),
         description = VALUES(description),
@@ -124,24 +157,31 @@ safe_query("
 $linkID = 0;
 $linkRes = safe_query("
     SELECT linkID FROM navigation_dashboard_links
-    WHERE modulname = 'pricing' AND url = 'admincenter.php?site=admin_pricing'
+    WHERE modulname = 'pricing'
     ORDER BY linkID ASC LIMIT 1
 ");
 if ($linkRes && ($linkRow = mysqli_fetch_assoc($linkRes))) {
-    $linkID = (int) ($linkRow['linkID'] ?? 0);
+    $linkID = (int)($linkRow['linkID'] ?? 0);
+    safe_query("
+        UPDATE navigation_dashboard_links SET
+            catID = 8,
+            url = 'admincenter.php?site=admin_pricing',
+            sort = 1
+        WHERE linkID = " . $linkID . "
+    ");
 } else {
     safe_query("
-        INSERT IGNORE INTO navigation_dashboard_links
+        INSERT INTO navigation_dashboard_links
             (catID, modulname, url, sort)
         VALUES
             (8, 'pricing', 'admincenter.php?site=admin_pricing', 1)
     ");
-    $linkID = (int) mysqli_insert_id($_database);
+    $linkID = (int)mysqli_insert_id($_database);
 }
 
 if ($linkID > 0) {
     safe_query("
-        INSERT IGNORE INTO navigation_dashboard_lang
+        INSERT INTO navigation_dashboard_lang
             (content_key, language, content, modulname, updated_at)
         VALUES
             ('nav_link_{$linkID}', 'de', 'Preise & Tarife', 'pricing', NOW()),
@@ -157,24 +197,33 @@ if ($linkID > 0) {
 $snavID = 0;
 $snavRes = safe_query("
     SELECT snavID FROM navigation_website_sub
-    WHERE modulname = 'pricing' AND url = 'index.php?site=pricing'
+    WHERE modulname = 'pricing'
     ORDER BY snavID ASC LIMIT 1
 ");
 if ($snavRes && ($snavRow = mysqli_fetch_assoc($snavRes))) {
-    $snavID = (int) ($snavRow['snavID'] ?? 0);
+    $snavID = (int)($snavRow['snavID'] ?? 0);
+    safe_query("
+        UPDATE navigation_website_sub SET
+            mnavID = 1,
+            url = 'index.php?site=pricing',
+            sort = 1,
+            indropdown = 1,
+            last_modified = NOW()
+        WHERE snavID = " . $snavID . "
+    ");
 } else {
     safe_query("
-        INSERT IGNORE INTO navigation_website_sub
+        INSERT INTO navigation_website_sub
             (mnavID, modulname, url, sort, indropdown, last_modified)
         VALUES
             (1, 'pricing', 'index.php?site=pricing', 1, 1, NOW())
     ");
-    $snavID = (int) mysqli_insert_id($_database);
+    $snavID = (int)mysqli_insert_id($_database);
 }
 
 if ($snavID > 0) {
     safe_query("
-        INSERT IGNORE INTO navigation_website_lang
+        INSERT INTO navigation_website_lang
             (content_key, language, content, modulname, updated_at)
         VALUES
             ('nav_sub_{$snavID}', 'de', 'Preise & Tarife', 'pricing', NOW()),
@@ -188,7 +237,8 @@ if ($snavID > 0) {
 }
 
 safe_query("
-    INSERT IGNORE INTO user_role_admin_navi_rights (id, roleID, type, modulname)
-    VALUES ('', 1, 'link', 'pricing')
+    INSERT IGNORE INTO user_role_admin_navi_rights
+        (id, roleID, type, modulname)
+    VALUES
+        ('', 1, 'link', 'pricing')
 ");
-?>
