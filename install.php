@@ -10,7 +10,7 @@ PluginInstallerHelper::install([
 
     'modulname'  => 'pricing',
     'name'       => 'Pricing',
-    'version'    => 'version'    => (string)($plugin['version'] ?? '0.0.0'),
+    'version'    => (string)($plugin['version'] ?? '0.0.0'),
     'author'     => 'T-Seven',
     'website'    => 'https://www.nexpell.de',
     'path'       => 'includes/plugins/pricing/',
